@@ -1,0 +1,41 @@
+import React, { useState } from 'react'
+
+const TodoComponent = () => {
+    const [todolist, setTodolist] = useState([{ name: "this is my first task", checked: false }, { name: "this is my second task", checked: true }]);
+    const clickHandler = () => {
+        let name = document.getElementById("text").value
+        setTodolist(todolist.concat({ name: name, checked: false }))
+        console.log(todolist);
+        document.getElementById("text").value = "";
+    }
+    const changeStatus = (e, index) => {
+        // setTodolist(todolist.map((item, i) => i === index ?
+        //     { name: item.name, checked: e.target.checked } :
+        //     { name: item.name, checked: item.checked }
+    let newArr=[...todolist];
+    newArr[index].checked=e.target.checked;
+    setTodolist(newArr)
+    }
+
+
+return (
+    <div>
+        {
+            todolist.map((item, index) => {
+
+                return <div key={index}>
+                    {item.name}
+                    <input type='button' value='Delete' id={index} />
+                    <input type="checkbox" id={index} checked={item.checked} onChange={(e) => changeStatus(e,index)} />
+                </div>
+            })
+        }
+        <div>
+            <textarea id="text" />
+            <input type='button' onClick={clickHandler} value="ADD" />
+        </div>
+    </div>
+)
+}
+
+export default TodoComponent
